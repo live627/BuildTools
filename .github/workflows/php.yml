@@ -27,24 +27,15 @@ jobs:
       if: steps.composer-cache.outputs.cache-hit != 'true'
       run: composer install --prefer-dist --no-progress --no-suggest
 
-    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
-    # Docs: https://getcomposer.org/doc/articles/scripts.md
-
-    # - name: Run test suite
-    #   run: composer run-script test
-
     - name: Lint PHP files
-      uses: overtrue/phplint@master
-      with:
-        path: .
-        options: --exclude=vendor -w
+      run: vendor/bin/phplint . --exclude=vendor -w
 
     - name: Checking for sign off (GPG also accepted)
-      run: php ./other/check-signed-off.php
+      run: php ./check-signed-off.php
 
     - name: Checking file integrity
       run: |
-        php ./other/check-eof.php
-        php ./other/check-smf-license.php
-        php ./other/check-smf-languages.php
-        php ./other/check-version.php
+        php ./check-eof.php
+        php ./check-smf-license.php
+        php ./check-smf-languages.php
+        php ./check-version.php
