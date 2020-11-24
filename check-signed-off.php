@@ -4,11 +4,11 @@
  * Simple Machines Forum (SMF)
  *
  * @package SMF
- * @author Simple Machines http://www.simplemachines.org
+ * @author Simple Machines https://www.simplemachines.org
  * @copyright 2020 Simple Machines and individual contributors
  * @license https://www.simplemachines.org/about/smf/license.php BSD
  *
- * @version 2.1 RC2
+ * @version 2.1 RC3
  */
 
 // Debug stuff.
@@ -33,7 +33,10 @@ if (DEBUG_MODE)
 
 // Nothing?  Well darn.
 if (empty($signedoff))
-	die('Error: Signed-off-by not found in commit message' . "\n");
+{
+	fwrite(STDERR, 'Error: Signed-off-by not found in commit message');
+	exit(1);
+}
 elseif (DEBUG_MODE)
 	debugPrint('Valid signed off found');
 
